@@ -12,16 +12,16 @@ public class ModuloAutorizacion {
         // COMPLETAR
     }
     
-    public Date fechaAcceso(String nombre, String pwd) {
-        // COMPLETAR  
-    }
-    
-    public void registrarUsuario(String nombre, String pwd) 
-        throws UsuarioExistente {
-        // COMPLETAR
-    }
-    
-    public boolean estaAutorizado(String nombre, String pwd) {
-        // COMPLETAR 
-    }
+//    public Date fechaAcceso(String nombre, String pwd) {
+//        // COMPLETAR  
+//    }
+//    
+//    public void registrarUsuario(String nombre, String pwd) 
+//        throws UsuarioExistente {
+//        // COMPLETAR
+//    }
+//    
+//    public boolean estaAutorizado(String nombre, String pwd) {
+//        // COMPLETAR 
+//    }
 }

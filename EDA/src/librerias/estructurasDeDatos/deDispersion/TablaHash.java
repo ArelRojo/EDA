@@ -69,29 +69,48 @@ public class TablaHash<C, V> implements Map<C, V> {
             if (n % i == 0) return false; // n NO es primo
          return true; // n SI es primo
      } 
+     
+     /** metodo auxiliar, invocado en las operaciones
+      *  recuperar, eliminar, insertar
+      */
+     private ListaConPI<EntradaHash<C, V>> localizar(C c) {
+         int pos = indiceHash(c);
+         ListaConPI<EntradaHash<C, V>> cubeta = elArray[pos];
+         for (cubeta.inicio(); 
+              !cubeta.esFin() && !cubeta.recuperar().clave.equals(c); 
+              cubeta.siguiente());
+         return cubeta;
+     }
     
-    /** Devuelve el valor de la entrada con clave c de una Tabla Hash,
-     *  o null si no hay una entrada con clave c en la Tabla
-     */
-    public V recuperar(C c) {
-        int pos = indiceHash(c);
-        ListaConPI<EntradaHash<C,V>> cubeta = elArray[pos];
-        V valor = null;
-        /*COMPLETAR*/
-        return valor;
-    }
+     /** Devuelve el valor de la entrada con clave c de una Tabla Hash,
+      *  o null si no hay una entrada con clave c en la Tabla
+      */
+     public V recuperar(C c) {
+         V valor = null;
+         // Busqueda en cubeta de la Entrada de clave c cuyo valor se quiere recuperar 
+         ListaConPI<EntradaHash<C, V>> cubeta = localizar(c);
+         // Resolucion de la Busqueda: SII esta la Entrada se recupera su valor
+         if (!cubeta.esFin()) { valor = cubeta.recuperar().valor; }
+         return valor;
+     }
     
-    /** Elimina la entrada con clave c de una Tabla Hash y devuelve
-     *  su valor asociado, o null si no hay ninguna entrada con 
-     *  clave c en la Tabla
-     */
-    public V eliminar(C c) {
-        int pos = indiceHash(c);
-        ListaConPI<EntradaHash<C,V>> cubeta = elArray[pos];
-        V valor = null;
-        /*COMPLETAR*/
-        return valor;
-    }
+     /** Elimina la entrada con clave c de una Tabla Hash y devuelve
+      *  su valor asociado, o null si no hay ninguna entrada con 
+      *  clave c en la Tabla
+      */
+     public V eliminar(C c) {
+         V valor = null;
+         // Busqueda en cubeta de la Entrada de clave c a eliminar
+         ListaConPI<EntradaHash<C, V>> cubeta = localizar(c);
+         // Resolucion de la Busqueda: 
+         // SII esta la Entrada se elimina, tras recuperar su valor
+         if (!cubeta.esFin()) {
+             valor = cubeta.recuperar().valor;
+             cubeta.eliminar();
+             talla--;
+         }
+         return valor;
+     }
         
     /** Inserta la entrada (c, v)  a una Tabla Hash y devuelve  
      *  el antiguo valor asociado a c, o null si no hay ninguna 
@@ -104,13 +123,24 @@ public class TablaHash<C, V> implements Map<C, V> {
     // factorDeCarga() > FACTOR_DE_CARGA.
     // Ello equivale, básicamente, a que la talla actual 
     // supere la tallaMaximaEstimada.
-    public V insertar(C c, V v) {
-        int pos = indiceHash(c);
-        ListaConPI<EntradaHash<C,V>> cubeta = elArray[indiceHash(c)];
-        V antiguoValor = null;
-        /*COMPLETAR*/
-        return antiguoValor;
-    }
+     public V insertar(C c, V v) {
+         V antiguoValor = null;
+         // Busqueda en cubeta de la Entrada de clave c 
+         ListaConPI<EntradaHash<C, V>> cubeta = localizar(c);
+         // Resolucion de la busqueda: 
+         // si la Entrada (c, v) ya existe se actualiza su valor, y sino se inserta
+         if (cubeta.esFin()) { // si no esta, insercion efectiva de la Entrada (c, v)
+             cubeta.insertar(new EntradaHash<C, V>(c, v));
+             talla++;
+             // EN LA PRACTICA 3: 
+             // if (factorCarga() > FACTOR_DE_CARGA) rehashing();
+         }
+         else { // si ya esta, actualizar (el valor de la) Entrada y retornar el antiguo
+             antiguoValor = cubeta.recuperar().valor;
+             cubeta.recuperar().valor = v; 
+         }
+         return antiguoValor;
+     }
      
     /** Comprueba si una Tabla Hash esta vacia, i.e. si tiene 0 entradas.
      */
@@ -128,7 +158,14 @@ public class TablaHash<C, V> implements Map<C, V> {
      */
     public ListaConPI<C> claves() {
         ListaConPI<C> l = new LEGListaConPI<C>();
-        /*COMPLETAR*/
+        for (ListaConPI<EntradaHash<C, V>> cubeta : elArray)            
+            for (cubeta.inicio(); !cubeta.esFin(); cubeta.siguiente())  
+                l.insertar(cubeta.recuperar().clave);
+        // Alternativamente:
+        /*for (int i = 0; i < elArray.length; i++)
+            for (elArray[i].inicio(); !elArray[i].esFin(); elArray[i].siguiente())
+                l.insertar(elArray[i].recuperar().clave);
+        */
         return l;
     }
     

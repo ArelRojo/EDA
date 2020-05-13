@@ -1,11 +1,29 @@
 package ejemplos.tema3;
 
-import librerias.estructurasDeDatos.modelos.*; 
+import librerias.estructurasDeDatos.modelos.*;
+
+import java.util.Locale;
+import java.util.Scanner;
+
 import librerias.estructurasDeDatos.deDispersion.*; 
 
 public class AnalizadorDeTexto {
+	  public static void main(String[] args) {	
+	    	Locale localEDA = new Locale("es", "US");
+	        Scanner teclado = new Scanner(System.in).useLocale(localEDA);
+	        System.out.println("Escriba palabras separadas por blancos:");
+	        String texto = teclado.nextLine();
+	        
+	        AnalizadorDeTexto t = new AnalizadorDeTexto(texto);
+	        
+	        System.out.println(t.frecuenciaMayorQue(5));
+	        
+	      
+	    }
 
-    protected Map<String, Integer> m;
+  
+
+	protected Map<String, Integer> m;
     
     /** construye un Analizador del Texto t, considerando que   
      *  el separador de sus palabras es el espacio en blanco
@@ -24,6 +42,9 @@ public class AnalizadorDeTexto {
         }
     }
     
+   
+
+    
     /** devuelve el nº de palabras con frecuencia de aparición mayor   
      *  que n que aparecen en el texto tratado por un Analizador.   
      *  Así, por ejemplo, si n=0 devuelve el número de palabras distintas  
@@ -31,6 +52,18 @@ public class AnalizadorDeTexto {
      *  repetidas que tiene el texto, etc.
      */
     public int frecuenciaMayorQue(int n) {
-        // COMPLETAR 
+        ListaConPI<String> deClaves = m.claves();
+        int cont=0;
+      
+        for(deClaves.inicio(); !deClaves.esFin(); deClaves.siguiente()) {
+        	  int res = m.recuperar(deClaves.recuperar());
+        	  if(n<res) {
+        		  cont++;
+        	  }
+        }
+		return cont;
     }  
+
+  
+    
 }

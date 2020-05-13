@@ -27,7 +27,7 @@ public class TestUnion {
         return aux.toString();
     }
     
-    public static <E> String unionMap(ListaConPI<E> l1, ListaConPI<E> l2) {
-        // COMPLETAR
-    }
+//    public static <E> String unionMap(ListaConPI<E> l1, ListaConPI<E> l2) {
+//        // COMPLETAR
+//    }
 }

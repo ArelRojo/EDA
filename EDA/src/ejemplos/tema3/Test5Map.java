@@ -41,7 +41,7 @@ public class Test5Map {
         }
     }
     
-    public static String traducir(String textoE, Map<String, String> d) {
-        //COMPLETAR
-    }          
+//    public static String traducir(String textoE, Map<String, String> d) {
+//        //COMPLETAR
+//    }          
 }
