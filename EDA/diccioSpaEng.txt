@@ -1,0 +1,5 @@
+aceite	oil
+abogado	lawyer
+albóndigas	meatballs
+abogada	lawyer
+abuela	grandmother
