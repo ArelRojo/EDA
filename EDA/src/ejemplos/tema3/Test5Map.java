@@ -47,11 +47,13 @@ public class Test5Map {
 		List<String> palabrasTraducidas = new ArrayList<>();
 		ListaConPI<String> deClaves = d.claves();
 		for (int i = 0; i < palabrasDelTexto.length; i++) {
+			if(d.recuperar(palabrasDelTexto[i]) == null) {palabrasTraducidas.add("<error>");}else {
 			for (deClaves.inicio(); !deClaves.esFin(); deClaves.siguiente()) {
 				if (palabrasDelTexto[i].equals(deClaves.recuperar())) {
 					palabrasTraducidas.add(d.recuperar(deClaves.recuperar()));
 				}
 
+			}
 			}
 
 		}
