@@ -6,7 +6,7 @@ package librerias.estructurasDeDatos.deDispersion;
  * TIENE la clave y el valor de una Entrada
  */
 
-class EntradaHash<C, V> {    
+public class EntradaHash<C, V> {    
     protected C clave;
     protected V valor;
 

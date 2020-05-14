@@ -3,6 +3,7 @@ package ejemplos.tema3;
 
 import librerias.estructurasDeDatos.modelos.ListaConPI;
 import librerias.estructurasDeDatos.modelos.Map;
+import librerias.estructurasDeDatos.deDispersion.EntradaHash;
 import librerias.estructurasDeDatos.deDispersion.TablaHash;
 import librerias.estructurasDeDatos.lineales.LEGListaConPI;
 
@@ -47,13 +48,15 @@ public class Test5Map {
 		List<String> palabrasTraducidas = new ArrayList<>();
 		ListaConPI<String> deClaves = d.claves();
 		for (int i = 0; i < palabrasDelTexto.length; i++) {
-			if(d.recuperar(palabrasDelTexto[i]) == null) {palabrasTraducidas.add("<error>");}else {
-			for (deClaves.inicio(); !deClaves.esFin(); deClaves.siguiente()) {
-				if (palabrasDelTexto[i].equals(deClaves.recuperar())) {
-					palabrasTraducidas.add(d.recuperar(deClaves.recuperar()));
-				}
+			if (d.recuperar(palabrasDelTexto[i]) == null) {
+				palabrasTraducidas.add("<error>");
+			} else {
+				for (deClaves.inicio(); !deClaves.esFin(); deClaves.siguiente()) {
+					if (palabrasDelTexto[i].equals(deClaves.recuperar())) {
+						palabrasTraducidas.add(d.recuperar(deClaves.recuperar()));
+					}
 
-			}
+				}
 			}
 
 		}
@@ -69,13 +72,16 @@ public class Test5Map {
 	}
 
 	public static void main(String[] args) {
-		Locale localEDA = new Locale("es", "US");
-		Scanner teclado = new Scanner(System.in).useLocale(localEDA);
-		System.out.println("Escriba palabras separadas por blancos:");
-		String texto = teclado.nextLine();
+//		Locale localEDA = new Locale("es", "US");
+//		Scanner teclado = new Scanner(System.in).useLocale(localEDA);
+//		System.out.println("Escriba palabras separadas por blancos:");
+//		String texto = teclado.nextLine();
+//
+//		Map<String, String> m = cargarDiccionario();
+//		
+		
+		 TablaHash<String, String> cubeta = (TablaHash<String, String>) cargarDiccionario();
 
-		Map<String, String> m = cargarDiccionario();
-
-		System.out.println("Traducción " + traducir(texto, m));
+		System.out.println("Traducción " + cubeta.clavesConValor("lawyer"));
 	}
 }
