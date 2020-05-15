@@ -205,19 +205,15 @@ public class TablaHash<C, V> implements Map<C, V> {
 	// ListaConPI con todas las claves que tienen asociado dicho valor.
 
 	public ListaConPI<C> clavesConValor(V v) {
-		ListaConPI lista = new LEGListaConPI<C>();
 		ListaConPI<C> deClaves = new LEGListaConPI<C>();
 		for (int i = 0; i < elArray.length; i++) {
-			deClaves.insertar(elArray[i].recuperar().clave);
-		}
-		for (ListaConPI<EntradaHash<C, V>> cubeta : elArray) {
-			for (cubeta.inicio(); !cubeta.esFin(); cubeta.siguiente()) {
-				if(v == cubeta.recuperar().valor) {
-					lista.insertar(deClaves.recuperar());
+			for (elArray[i].inicio();!elArray[i].esFin(); elArray[i].siguiente()) {
+				if(elArray[i].recuperar().valor.equals(v)) {
+					deClaves.insertar(elArray[i].recuperar().clave);
 				}
 			}
 		}
-		return lista;
+		return deClaves;
 	}
 
 	/*******************************
@@ -232,6 +228,6 @@ public class TablaHash<C, V> implements Map<C, V> {
 		/* COMPLETAR */
 		return res.toString();
 	}
-	
 
+	
 }
