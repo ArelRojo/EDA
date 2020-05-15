@@ -207,7 +207,7 @@ public class TablaHash<C, V> implements Map<C, V> {
 	public ListaConPI<C> clavesConValor(V v) {
 		ListaConPI<C> deClaves = new LEGListaConPI<C>();
 		for (int i = 0; i < elArray.length; i++) {
-			for (elArray[i].inicio();!elArray[i].esFin(); elArray[i].siguiente()) {
+  			for (elArray[i].inicio();!elArray[i].esFin(); elArray[i].siguiente()) {
 				if(elArray[i].recuperar().valor.equals(v)) {
 					deClaves.insertar(elArray[i].recuperar().clave);
 				}
