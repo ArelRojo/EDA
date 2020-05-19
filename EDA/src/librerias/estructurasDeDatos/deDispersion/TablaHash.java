@@ -37,6 +37,7 @@ public class TablaHash<C, V> implements Map<C, V> {
 	/**
 	 * Obtiene la moda de un array generico v (i.e devuelve el primer elemento de v
 	 * que se repite más veces)
+	 * @param <E>
 	 */
 
 	public static <E> E modaDe(E[] v) {
