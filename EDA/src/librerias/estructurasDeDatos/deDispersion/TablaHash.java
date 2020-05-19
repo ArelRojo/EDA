@@ -35,6 +35,32 @@ public class TablaHash<C, V> implements Map<C, V> {
 	protected int talla;
 
 	/**
+	 * Obtiene la moda de un array generico v (i.e devuelve el primer elemento de v
+	 * que se repite más veces)
+	 */
+
+	public static <E> E modaDe(E[] v) {
+		E moda = null;
+		int frecModa = 0;
+		Map<E, Integer> map = new TablaHash<E, Integer>(v.length);
+		for (int i = 0; i < v.length; i++) {
+			Integer frec = map.recuperar(v[i]);
+			if (frec != null) {
+				frec++;
+			} else {
+				frec = 1;
+			}
+			map.insertar(v[i], frec);
+			if (frec > frecModa) {
+				frecModa = frec;
+				moda = v[i];
+			}
+		}
+		return moda;
+
+	}
+
+	/**
 	 * Devuelve el indice Hash de la Clave c de una Entrada, i.e. la cubeta en la
 	 * que se debe encontrar la Entrada de clave c *** SIN ESTE METODO NO SE TIENE
 	 * UNA TABLA HASH, SOLO UN ARRAY ***
@@ -207,8 +233,8 @@ public class TablaHash<C, V> implements Map<C, V> {
 	public ListaConPI<C> clavesConValor(V v) {
 		ListaConPI<C> deClaves = new LEGListaConPI<C>();
 		for (int i = 0; i < elArray.length; i++) {
-  			for (elArray[i].inicio();!elArray[i].esFin(); elArray[i].siguiente()) {
-				if(elArray[i].recuperar().valor.equals(v)) {
+			for (elArray[i].inicio(); !elArray[i].esFin(); elArray[i].siguiente()) {
+				if (elArray[i].recuperar().valor.equals(v)) {
 					deClaves.insertar(elArray[i].recuperar().clave);
 				}
 			}
@@ -229,5 +255,4 @@ public class TablaHash<C, V> implements Map<C, V> {
 		return res.toString();
 	}
 
-	
 }

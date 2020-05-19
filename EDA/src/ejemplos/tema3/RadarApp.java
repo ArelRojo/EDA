@@ -12,6 +12,11 @@ public class RadarApp {
     }
     
     public void registrar(Matricula mat) {
-        // COMPLETAR
+      Integer frec = map.recuperar(mat);
+      if(frec != null) {
+    	  map.insertar(mat, frec+1);
+      }else {
+    	  map.insertar(mat, 1);
+      }
     }
 }

@@ -14,4 +14,13 @@ public class Matricula {
     
     // ANYADIR LOS METODOS A PARTIR DE AQUI
 
-}
+    public boolean equals (Object o) {
+    	return o instanceof Matricula
+    			&& letras.equals(((Matricula) o).letras)
+    			&& numeros == ((Matricula) o).numeros;
+    }
+    
+    public int hashCode() {
+    	return (letras + numeros).hashCode();
+    }
+    }	
