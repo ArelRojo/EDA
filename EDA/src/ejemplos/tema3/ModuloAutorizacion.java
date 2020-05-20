@@ -18,15 +18,17 @@ public class ModuloAutorizacion {
 	}
 
 	public Date fechaAcceso(String nombre, String pwd) {
-		Date fecha = new Date();
-		return fecha;
+		
+		Date d = m.recuperar(new User(nombre,pwd));
+		return d;
+		
 	}
 
 	public void registrarUsuario(String nombre, String pwd) throws UsuarioExistente {
 		if (m.recuperar(new User(nombre, pwd)) != null) {
 			throw new UsuarioExistente("Ya existe " + nombre);
 		} else {
-			m.insertar(new User(nombre, pwd), null);
+			m.insertar(new User(nombre, pwd), new Date());
 		}
 	}
 

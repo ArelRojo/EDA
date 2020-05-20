@@ -8,6 +8,7 @@ public class TestModuloAutorizacion {
         ModuloAutorizacion mA = new ModuloAutorizacion(10);
         // COMPLETAR
         mA.registrarUsuario("Lisa Saliasi", "x1999");
+        Thread.sleep(8000);
         mA.registrarUsuario("Francisco Jesús Pérez Chavarría","x1986");
         mA.registrarUsuario("Sara Saliasi", "x1992");
         
