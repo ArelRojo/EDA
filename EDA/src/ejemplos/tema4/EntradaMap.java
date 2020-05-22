@@ -10,9 +10,9 @@ public class EntradaMap<C extends Comparable<C>, V>
     implements Comparable<EntradaMap<C, V>> {
     
     // Una entrada de un Map Ordenado TIENE UNA
-    private C clave;
+    C clave;
     // Una entrada de un Map Ordenado TIENE UN 
-    private V valor;
+    V valor;
    
     /** crea una Entrada (c, v) de un Map Ordenado */
     public EntradaMap(C c, V v) {
