@@ -50,31 +50,118 @@ public class ABB<E extends Comparable<E>> {
 		}
 	}
 
-	/**Permite recuperar un dato e del nodo Actual de un ABB 
+	/**
+	 * Permite recuperar un dato e del nodo Actual de un ABB
+	 * 
 	 * @param e
 	 * @param actual
 	 * @return
 	 */
-	protected NodoABB<E> recuperar (E e ,NodoABB<E> actual){
-		NodoABB<E> res = actual; //caso base equivalente a res == null
+	protected NodoABB<E> recuperar(E e, NodoABB<E> actual) {
+		NodoABB<E> res = actual; // caso base equivalente a res == null
+		if (actual != null) {
+			int resC = actual.dato.compareTo(e);
+			if (resC > 0) {
+				res = recuperar(e, actual.izq);
+			} else if (resC < 0) {
+				res = recuperar(e, actual.der);
+			} // else no hacer nada pq res se ha inicializado a actual
+		}
+		return res;
+	}
+
+	public E recuperar(E e) {
+		NodoABB<E> res = recuperar(e, this.raiz);
+
+		if (res == null) {
+			return null;
+		} else {
+			return res.dato;
+		}
+
+	}
+	
+	protected NodoABB<E> insertar(E e, NodoABB<E> actual){
+		NodoABB<E> res = actual;
 		if(actual != null) {
 			int resC = actual.dato.compareTo(e);
 			if(resC > 0) {
-				res = recuperar(e, actual.izq);
+				res.izq = insertar(e, actual.izq);
 			}
 			else if(resC < 0) {
-				res = recuperar(e, actual.der);
-			} //else no hacer nada pq res se ha inicializado a actual
-		} 
+				res.der = insertar(e, actual.der);
+			}
+			else {
+				res.talla = 1 + talla(res.izq) + talla(res.der);//se actualiza la talla
+			}
+		}else {
+			res = new NodoABB<E>(e);//se inicializa la talla a uno
+		}
 		return res;
 	}
+
+	public void insertar(E e) {
+		this.raiz = insertar(e, this.raiz);
+	}
 	
-	public E recuperar(E e) {
-		NodoABB<E> res = recuperar(e, this.raiz);
-		
-		if(res == null) {return null;}
-		else {return res.dato;}
+	protected NodoABB<E> eliminar(E e, NodoABB<E> actual){
+		NodoABB<E> res = actual;
+		if(actual != null) {
+			int resC = actual.dato.compareTo(e);
+			if(resC > 0) {
+				res.izq = eliminar(e, actual.izq);
+			}
+			else if(resC<0) {
+				res.der = eliminar(e, actual.der);
+			}
+			else {
+			//eliminar actual
+				if(actual.izq == null) {
+					return actual.der;
+				}
+				else if(actual.der == null) {
+					return actual.izq;
+				}
+				else {
+					res.dato = recuperarMin(actual.der).dato;
+					res.der = eliminarMin(actual.der);
+				}
+			}
+			res.talla = 1 + talla(res.izq) + talla(res.der);
+			
+		}
+			return res;
+			
+	}
+	
+	//SII actual != null: devuelve el Nodo de actual que contiene a su minimo
+	protected NodoABB<E> recuperarMin(NodoABB<E> actual){
+		if(actual.izq == null) {
+			return actual;
+		}
+		return recuperarMin(actual.izq);
+	}
+	
+	//SII !esVacio()
+	public E recuperarMin() {
+		return recuperarMin(raiz).dato;
+	}
+	
+	//SII actual != null: devuelve el nodo Actual tras eliminar su minimo
+	protected NodoABB<E> eliminarMin(NodoABB<E> actual){
+		if(actual.izq == null) {
+			return actual.der;
+		}
+		actual.izq = eliminarMin(actual.izq);
+		actual.talla--;
+		return actual;
 		
 	}
-
+	
+	//SII !esVacio()
+	public E eliminarMin() {
+		E res =  recuperarMin();
+		this.raiz = eliminarMin(this.raiz);
+		return res;
+	}
 }
