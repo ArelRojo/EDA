@@ -1,4 +1,4 @@
-package librerias.estructurasDeDatos.modelos;
+package ejemplos.tema4;
 
 /** Representa una Entrada de un MapOrdenado:
  * @param <C>, el tipo de sus claves: cualquier tipo que implemente Comparable 

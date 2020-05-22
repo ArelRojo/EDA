@@ -1,5 +1,7 @@
 package librerias.estructurasDeDatos.modelos;
 
+import ejemplos.tema4.EntradaMap;
+
 /**
  * Modelo Diccionario Ordenado SIN claves repetidas, o Map Ordenado:  
  * Busqueda Dinamica de una Entrada de Clave dada, para recuperar el 
