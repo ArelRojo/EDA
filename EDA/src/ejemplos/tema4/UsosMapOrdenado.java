@@ -54,14 +54,21 @@ public class UsosMapOrdenado {
         return l;
     }
     
-    /** Diseñar un metodo estatico, generico e iterativo mapSort 
+    /** Disenyar un metodo estatico, generico e iterativo mapSort 
      *  que, con la ayuda de un MapOrdenado, 
      *  ordene los elementos (Comparable) de un array v.  
      */
     public static <C extends Comparable<C>> void mapSort(C[] v) {
-    
+    	MapOrdenado<C, C> map = new ABBMapOrdenado<C,C>();
+    	for(int i = 0; i < v.length; i++) {
+    		map.insertar(v[i], v[i]);
+    	}
+    	C c = map.recuperarMin();
+    	for(int i = 0; i<v.length; i++) {
+    		v[i] = c;
+    		c = map.sucesor(c);
+    	}
     }
-    
     /** Diseñar un metodo estatico, generico e iterativo hayDosQueSuman 
      *  que, dados un array v de enteros y un entero k, 
      *  determine si existen en v dos numeros cuya suma sea k. 
@@ -80,6 +87,7 @@ public class UsosMapOrdenado {
     		else if(min+max < k) {min=aux.sucesor(min);}
     		else {max = aux.predecesor(max);}
     	}
+		return res;
     	
     }
 }

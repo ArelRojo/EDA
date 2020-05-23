@@ -1,5 +1,7 @@
 package librerias.estructurasDeDatos.jerarquicos;
 
+import ejemplos.tema4.EntradaMap;
+
 /**
  * Clase ABB<E> que, en base a la identificacion AB-Nodo, representa un Arbol
  * Binario mediante un enlace a su Nodo Raiz. Para poder utilizarla como
@@ -71,31 +73,42 @@ public class ABB<E extends Comparable<E>> {
 	}
 
 	public E recuperar(E e) {
-		NodoABB<E> res = recuperar(e, this.raiz);
+		NodoABB<E> aux = this.raiz;
+		while (aux != null) {
+			int resC = aux.dato.compareTo(e);
+			if (resC == 0) {
+				return aux.dato;
+			} else if (resC > 0) {
+				aux = aux.izq;
+			} else {
+				aux = aux.der;
+			}
 
-		if (res == null) {
-			return null;
-		} else {
-			return res.dato;
 		}
+		return null;
+//		NodoABB<E> res = recuperar(e, this.raiz);
+//
+//		if (res == null) {
+//			return null;
+//		} else {
+//			return res.dato;
+//		}
 
 	}
-	
-	protected NodoABB<E> insertar(E e, NodoABB<E> actual){
+
+	protected NodoABB<E> insertar(E e, NodoABB<E> actual) {
 		NodoABB<E> res = actual;
-		if(actual != null) {
+		if (actual != null) {
 			int resC = actual.dato.compareTo(e);
-			if(resC > 0) {
+			if (resC > 0) {
 				res.izq = insertar(e, actual.izq);
-			}
-			else if(resC < 0) {
+			} else if (resC < 0) {
 				res.der = insertar(e, actual.der);
+			} else {
+				res.talla = 1 + talla(res.izq) + talla(res.der);// se actualiza la talla
 			}
-			else {
-				res.talla = 1 + talla(res.izq) + talla(res.der);//se actualiza la talla
-			}
-		}else {
-			res = new NodoABB<E>(e);//se inicializa la talla a uno
+		} else {
+			res = new NodoABB<E>(e);// se inicializa la talla a uno
 		}
 		return res;
 	}
@@ -103,65 +116,180 @@ public class ABB<E extends Comparable<E>> {
 	public void insertar(E e) {
 		this.raiz = insertar(e, this.raiz);
 	}
-	
-	protected NodoABB<E> eliminar(E e, NodoABB<E> actual){
+
+	protected NodoABB<E> eliminar(E e, NodoABB<E> actual) {
 		NodoABB<E> res = actual;
-		if(actual != null) {
+		if (actual != null) {
 			int resC = actual.dato.compareTo(e);
-			if(resC > 0) {
+			if (resC > 0) {
 				res.izq = eliminar(e, actual.izq);
-			}
-			else if(resC<0) {
+			} else if (resC < 0) {
 				res.der = eliminar(e, actual.der);
-			}
-			else {
-			//eliminar actual
-				if(actual.izq == null) {
+			} else {
+				// eliminar actual
+				if (actual.izq == null) {
 					return actual.der;
-				}
-				else if(actual.der == null) {
+				} else if (actual.der == null) {
 					return actual.izq;
-				}
-				else {
+				} else {
 					res.dato = recuperarMin(actual.der).dato;
 					res.der = eliminarMin(actual.der);
 				}
 			}
 			res.talla = 1 + talla(res.izq) + talla(res.der);
-			
+
 		}
-			return res;
-			
+		return res;
+
 	}
-	
-	//SII actual != null: devuelve el Nodo de actual que contiene a su minimo
-	protected NodoABB<E> recuperarMin(NodoABB<E> actual){
-		if(actual.izq == null) {
+
+	public void eliminar(E e) {
+		this.raiz = eliminar(e, this.raiz);
+	}
+
+	// SII actual != null: devuelve el Nodo de actual que contiene a su minimo
+	protected NodoABB<E> recuperarMin(NodoABB<E> actual) {
+		if (actual.izq == null) {
 			return actual;
 		}
 		return recuperarMin(actual.izq);
 	}
-	
-	//SII !esVacio()
+
+	protected NodoABB<E> recuperarMax(NodoABB<E> actual) {
+		if (actual.der == null) {
+			return actual;
+		}
+		return recuperarMax(actual.der);
+	}
+
+	// SII !esVacio()
 	public E recuperarMin() {
 		return recuperarMin(raiz).dato;
 	}
-	
-	//SII actual != null: devuelve el nodo Actual tras eliminar su minimo
-	protected NodoABB<E> eliminarMin(NodoABB<E> actual){
-		if(actual.izq == null) {
+
+	public E recuperarMax() {
+		return recuperarMax(raiz).dato;
+	}
+
+	// SII actual != null: devuelve el nodo Actual tras eliminar su minimo,
+	// copiando el dato que este contiene en nodoMin(paso por referencia)
+	protected NodoABB<E> eliminarMin(NodoABB<E> actual) {
+//		NodoABB<E> aux = actual, padreAux = null;
+//		while (aux.izq != null) {
+//			aux.talla--;
+//			padreAux = aux;
+//			aux = aux.izq;
+//
+//		}
+//		nodoMin.dato = aux.dato;
+//		if (padreAux == null) {
+//			actual = actual.der;
+//		} else {
+//			padreAux.izq = aux.der;
+//		}
+//		return actual;
+		if (actual.izq == null) {
 			return actual.der;
 		}
 		actual.izq = eliminarMin(actual.izq);
 		actual.talla--;
 		return actual;
-		
+
 	}
-	
-	//SII !esVacio()
+
+	// SII !esVacio()
 	public E eliminarMin() {
-		E res =  recuperarMin();
+//		NodoABB<E> nodoMin = new NodoABB<E>(null);
+//		this.raiz = eliminarMin(this.raiz, nodoMin);
+//		return nodoMin.dato;
+		E res = recuperarMin();
 		this.raiz = eliminarMin(this.raiz);
 		return res;
 	}
+
+	protected NodoABB<E> sucesor(E e, NodoABB<E> actual) {
+		NodoABB<E> res = null;
+		if (actual != null) {
+			int resC = actual.dato.compareTo(e);
+			if (resC > 0) {
+				res = sucesor(e, actual.izq);// va a la izq
+				// vuelve de la izq donde está el sucesor
+				if (res == null) {
+					res = actual; // actualiza el sucesor
+				}
+			} else {
+				res = sucesor(e, actual.der);
+			} // va a la derecha
+				// vuelve de la derecha , luego el sucesor no varia
+		}
+		return res;
+	}
+
+	protected NodoABB<E> predecesor(E e, NodoABB<E> actual) {
+		NodoABB<E> res = null;
+		if (actual != null) {
+			int resC = actual.dato.compareTo(e);
+			if (resC < 0) {
+				res = predecesor(e, actual.der);
+				if (res == null)
+					res = actual;
+			} else {
+				res = predecesor(e, actual.izq);
+			}
+		}
+		return res;
+	}
+
+	public E predecesor(E e) {
+		NodoABB<E> res = predecesor(e, this.raiz);
+		if (res == null)
+			return null;
+		else
+			return res.dato;
+	}
+
+	public E sucesor(E e) {
+		NodoABB<E> res = sucesor(e, this.raiz);
+		if (res == null)
+			return null;
+		else
+			return res.dato;
+	}
+
+	protected NodoABB<E> seleccionar(int k, NodoABB<E> actual) {
+		int tallaI = talla(actual.izq);
+		if (k == tallaI + 1) {
+			return actual;
+		} else if (k <= tallaI) {
+			return seleccionar(k, actual.izq);
+		} else {
+			return seleccionar(k - tallaI - 1, actual.der);
+		}
+	}
+
+	public E seleccionar(int k) {
+		return seleccionar(k, this.raiz).dato;
+	}
+	
+	 /** devuelve un String con los Datos de un ABB en In-Orden */
+    public String toStringInOrden() {  
+        StringBuilder res = new StringBuilder().append("[");
+        if (raiz != null) { toStringInOrden(raiz, res); }
+        return res.append("]").toString();
+    }
+    // SII actual != null: actualiza res con los Datos del Nodo actual  
+    // en In-Orden (Recorrido In-Orden con caso base Nodo Hoja implicito)
+    protected void toStringInOrden(NodoABB<E> actual, StringBuilder res) {
+        if (actual.izq != null) {
+            toStringInOrden(actual.izq, res); 
+            res.append(", ");
+        }
+        res.append(actual.dato.toString()); 
+        if (actual.der != null) {
+            res.append(", ");
+            toStringInOrden(actual.der, res);
+        }
+    }
+
+
 }
