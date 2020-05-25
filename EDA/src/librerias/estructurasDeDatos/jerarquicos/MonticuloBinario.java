@@ -151,5 +151,29 @@ public class MonticuloBinario<E extends Comparable<E>>
             hundir(i);
         }
     } 
-
+    
+    public boolean hayMenoresQue(E e) {
+    	E aux = recuperarMin();
+    	if (talla == 0) {return false;}
+    	else {
+    	if(e.equals(aux)) {
+    		return false;
+    	}else return true;
+    }
+    }
+    
+    public boolean hayMayoresQue(E e) {
+    	int pos = talla/2+1;
+    	for(int i = pos; i <= talla; i++) {
+    		if(elArray[i].compareTo(e) > 0) return true;
+    	}
+    	return false;
+    }
+    
+    public boolean estaEn(E e) {
+    	for(int i = 1; i<=talla; i++) {
+    		if(elArray[i].equals(e)) { return true;}
+    	}
+    	return false;
+    }
 }
