@@ -42,7 +42,36 @@ public class UsosColaPrioridad {
     public static <E extends Comparable<E>> ListaConPI<E> cPFusionar(
         ColaPrioridad<E> cP1, ColaPrioridad<E> cP2) 
     {
-        // COMPLETAR
+        ListaConPI<E> res = new LEGListaConPI<>();
+        while(!cP1.esVacia() || !cP2.esVacia()) {
+        	if(cP1.esVacia()) {
+        		res.insertar(cP2.recuperarMin());
+        		cP2.eliminarMin();
+        	}
+        	else if(cP2.esVacia()) {
+        		res.insertar(cP1.recuperarMin());
+        		cP1.eliminarMin();
+        	}
+        	else {
+        		E minCp1 = cP1.recuperarMin();
+                E minCp2 = cP2.recuperarMin();
+                int aux = minCp1.compareTo(minCp2);
+                if(aux > 0) {
+                	res.insertar(minCp2);
+                	res.insertar(minCp1);
+                }
+                else if(aux < 0) {
+                	res.insertar(minCp1);
+                	res.insertar(minCp2);
+                }
+                else {
+                	res.insertar(minCp1);
+                }
+                cP2.eliminarMin();
+            	cP1.eliminarMin();
+        	}
+        }
+        return res;
     }
     
     /** Problema 3:
