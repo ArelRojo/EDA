@@ -84,7 +84,12 @@ public class UsosColaPrioridad {
     public static <E extends Comparable<E>> ColaPrioridad<E> cPTopK(
         E[] v, int k) 
     {
-        // COMPLETAR
+        ColaPrioridad<E> topK = new MonticuloBinario<E>(k + 1);
+        for(int i = 0; i<v.length;i++){
+        	topK.insertar(v[i]);
+        	if(i >= k -1) {topK.eliminarMin();}
+        }
+        return topK;
     }
     
 }
