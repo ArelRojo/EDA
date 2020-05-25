@@ -92,6 +92,8 @@ public class UsosColaPrioridad {
         return topK;
     }
     
+	
+    
     public static void main(String[] args) {
     	MonticuloBinario<Integer> aux = new MonticuloBinario<>();
     	aux.insertar(1);
@@ -100,8 +102,14 @@ public class UsosColaPrioridad {
     	aux.insertar(1);
     	aux.insertar(5);
     	aux.insertar(6);
-    	System.out.println(aux.toString());
-    	System.out.println(aux.menoresQue(3));
+//    	System.out.println(aux.toString());
+//    	System.out.println(aux.eliminar1aHoja());
+//    	System.out.println(aux.toString());
+    	
+    	Integer[] v = {1,5,4,2,7};
+    	Integer[] b = aux.heapSort(v);
+    	for(int i = 0; i<b.length; i++) {
+    		System.out.println(v[i].toString());
+    	}
     }
-    
-}
+    }

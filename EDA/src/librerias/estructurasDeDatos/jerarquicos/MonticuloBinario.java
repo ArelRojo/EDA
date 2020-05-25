@@ -242,8 +242,24 @@ public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<
 	}
 	
 	public E eliminar1aHoja() {
+		int n = talla/2 + 1;
+		return eliminar(n);
+		
+		
 		
 	}
 	
+	public static <E extends Comparable<E>> E[] heapSort(E[] v) {
+		MonticuloBinario<E> mon = new MonticuloBinario<E>();
+		for(int i = 0; i<v.length; i++) {
+			mon.insertar(v[i]);
+		}
 	
+		while(!mon.esVacia()) {
+			for(int i= 0; i<v.length; i++) {
+				v[i] = mon.eliminarMin();
+			}
+		}
+		return v;
+	}
 }
