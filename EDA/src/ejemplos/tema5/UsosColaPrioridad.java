@@ -66,7 +66,13 @@ public class UsosColaPrioridad {
      *  en orden ascendente, esta acotada por un epsilon dado. 
      */
     public static boolean cPEsLineal(ColaPrioridad<Double> cP, double epsilon) {
-        // COMPLETAR
+        double a = cP.eliminarMin();
+        while(!cP.esVacia()) {
+        	double b = cP.eliminarMin();
+        	if(b-a > epsilon) return false;
+        	a=b;
+        }
+        return true;
     }
     
     /** Problema 4:
