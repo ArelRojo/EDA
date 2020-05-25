@@ -1,6 +1,6 @@
 package librerias.estructurasDeDatos.modelos;
 
-import ejemplos.tema4.EntradaMap;
+import librerias.estructurasDeDatos.deDispersion.EntradaMap;
 
 /**
  * Modelo Diccionario Ordenado SIN claves repetidas, o Map Ordenado:  

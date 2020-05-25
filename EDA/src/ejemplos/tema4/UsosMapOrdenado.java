@@ -2,7 +2,8 @@ package ejemplos.tema4;
 
 import librerias.estructurasDeDatos.modelos.MapOrdenado;
 import librerias.estructurasDeDatos.modelos.ListaConPI; 
-import librerias.estructurasDeDatos.lineales.LEGListaConPI; 
+import librerias.estructurasDeDatos.lineales.LEGListaConPI;
+import librerias.estructurasDeDatos.deDispersion.EntradaMap;
 import librerias.estructurasDeDatos.jerarquicos.ABBMapOrdenado;
 
 /**

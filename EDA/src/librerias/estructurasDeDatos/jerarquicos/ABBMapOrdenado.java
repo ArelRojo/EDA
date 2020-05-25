@@ -3,9 +3,9 @@ package librerias.estructurasDeDatos.jerarquicos;
 import librerias.estructurasDeDatos.modelos.MapOrdenado;
 import librerias.estructurasDeDatos.modelos.ListaConPI;
 import librerias.estructurasDeDatos.modelos.Map;
+import librerias.estructurasDeDatos.deDispersion.EntradaMap;
 import librerias.estructurasDeDatos.deDispersion.TablaHash;
 import librerias.estructurasDeDatos.lineales.LEGListaConPI;
-import ejemplos.tema4.EntradaMap;
 import librerias.estructurasDeDatos.modelos.ListaConPI;
 import librerias.estructurasDeDatos.modelos.MapOrdenado;
 

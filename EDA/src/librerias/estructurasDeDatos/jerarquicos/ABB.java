@@ -1,7 +1,7 @@
 package librerias.estructurasDeDatos.jerarquicos;
 
 
-import ejemplos.tema4.EntradaMap;
+import librerias.estructurasDeDatos.deDispersion.EntradaMap;
 import librerias.estructurasDeDatos.jerarquicos.NodoABB;
 import librerias.estructurasDeDatos.lineales.LEGListaConPI;
 import librerias.estructurasDeDatos.modelos.ListaConPI;
