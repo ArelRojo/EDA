@@ -1,6 +1,10 @@
 package librerias.estructurasDeDatos.jerarquicos;
 
+
 import ejemplos.tema4.EntradaMap;
+import librerias.estructurasDeDatos.jerarquicos.NodoABB;
+import librerias.estructurasDeDatos.lineales.LEGListaConPI;
+import librerias.estructurasDeDatos.modelos.ListaConPI;
 
 /**
  * Clase ABB<E> que, en base a la identificacion AB-Nodo, representa un Arbol
@@ -272,6 +276,44 @@ public class ABB<E extends Comparable<E>> {
 	}
 	
 	 /** devuelve un String con los Datos de un ABB en In-Orden */
+    public ListaConPI<E> toListaConPI() {  
+        ListaConPI<E> res = new LEGListaConPI<>();
+        if (raiz != null) { toListaConPI(raiz, res); }
+        return res;
+    }
+    // SII actual != null: actualiza res con los Datos del Nodo actual  
+    // en In-Orden (Recorrido In-Orden con caso base Nodo Hoja implicito)
+    protected void toListaConPI(NodoABB<E> actual, ListaConPI<E> res) {
+        if (actual.izq != null) {
+            toListaConPI(actual.izq, res); 
+           
+        }
+        res.insertar(actual.dato);
+        if (actual.der != null) {
+            toListaConPI(actual.der, res);
+        }
+    }
+
+    protected int enQueNivel(E e, NodoABB<E> actual, int nivelActual) {
+    	int res = -1;
+    	int resC = actual.dato.compareTo(e);
+    	if(resC == 0) {res = nivelActual;}
+    	else {
+    		if(actual.izq != null && resC > 0) {
+    			res = enQueNivel(e, actual.izq, nivelActual+1);
+    		}
+    		else if (actual.der != null && resC < 0) {
+    			res = enQueNivel(e, actual.der, nivelActual+1);
+    		}
+    	}
+    	return res;
+    }
+
+    public int enQueNivel(E e) {
+    	if(this.raiz == null) {return -1;}
+    	return enQueNivel(e, this.raiz, 0);
+    }
+    /** devuelve un String con los Datos de un ABB en In-Orden */
     public String toStringInOrden() {  
         StringBuilder res = new StringBuilder().append("[");
         if (raiz != null) { toStringInOrden(raiz, res); }
@@ -290,6 +332,19 @@ public class ABB<E extends Comparable<E>> {
             toStringInOrden(actual.der, res);
         }
     }
-
-
+    
+    protected String datosEnNivel(int k, NodoABB<E> actual) {
+    	String res = "";
+    	if(actual != null) {
+    		if(k == 0) {res = actual.dato.toString();}
+    		else {
+    			res = datosEnNivel(k - 1, actual.izq) + "," + datosEnNivel(k-1, actual.der);
+    		}
+    	}
+    	return res;
+    }
+    
+    public String datosEnNivel(int k) {
+    	return "[" + datosEnNivel(k, this.raiz) + "]";
+    }
 }
