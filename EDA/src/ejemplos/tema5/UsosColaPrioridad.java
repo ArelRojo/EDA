@@ -20,7 +20,16 @@ public class UsosColaPrioridad {
      *  ordene un array v de elementos Comparable. 
      */
     public static <E extends Comparable<E>> void cPSort(E[] v) {
-        // COMPLETAR
+       ColaPrioridad<E> cola = new MonticuloBinario<>();
+       for(int i = 0; i<v.length;i++) {
+    	   cola.insertar(v[i]);
+       }
+       v[0] = cola.recuperarMin();
+       cola.eliminarMin();
+       for(int i = 1; i < v.length; i++) {
+    	   v[i] = cola.recuperarMin();
+    	   cola.eliminarMin();
+       }
     }
     
     /** Problema 2:
