@@ -92,45 +92,90 @@ public abstract class Grafo {
 	protected int[] visitados;
 	protected int ordenVisita;
 
-	// metodo toArrayDFS de un vertice
-	protected void toArrayDFS(int v, int[] res) {
-		res[ordenVisita] = v;
-		ordenVisita++;
-		visitados[v] = 1;
-		ListaConPI<Adyacente> l = adyacentesDe(v);
-		for (l.inicio(); !l.esFin(); l.siguiente()) {
-			int w = l.recuperar().getDestino();
-			if (visitados[w] == 0) {
-				toArrayDFS(w, res);
-			}
-
-		}
-	}
+	
 	//metodo toArrayDFS del grafo
 	public int[] toArrayDFS() {
 		int[]res =new int[numVertices()];
 		ordenVisita=0;
 		visitados =new int[numVertices()];
-		for(int v =0; v<numVertices(); v++) {
+		for(int v = 0; v<numVertices(); v++) {
 			if(visitados[v] == 0) {toArrayDFS(v, res);}
 			
 		}
 		return res;
 	}
 	
+	public int[] finDelDFS() {
+		int[] res = new int[numVertices()]; ordenVisita = 0;
+		visitados = new int[numVertices()];
+		for(int v = 0; v<numVertices(); v++) {
+			if(visitados[v] == 0) {finDelDFS(v, res);}
+		}
+		return res;
+	}
+	
+	// metodo toArrayDFS de un vertice
+		protected void toArrayDFS(int v, int[] res) {
+			res[ordenVisita] = v;
+			ordenVisita++;
+			visitados[v] = 1;
+			ListaConPI<Adyacente> l = adyacentesDe(v);
+			for (l.inicio(); !l.esFin(); l.siguiente()) {
+				int w = l.recuperar().getDestino();
+				if (visitados[w] == 0) {
+					toArrayDFS(w, res);
+				}
+
+			}
+		}
+		
+	/** metodo finDelDFS 
+	 */
+	protected void finDelDFS(int v, int[] res) {
+		visitados[v] = 1;
+		ListaConPI<Adyacente> l = adyacentesDe(v);
+		for(l.inicio(); !l.esFin(); l.siguiente()) {
+			int w = l.recuperar().getDestino();
+			if(visitados[w] == 0) {
+				finDelDFS(w,res);
+			}
+		}
+		visitados[v] = 2;
+		res[ordenVisita] = v; ordenVisita++;
+	}
+	
 	/**
 	 * Se iran anyadiendo metodos y atributos "auxiliares" conforme avance el tema.
 	 */
+	public boolean esConexo() {
+		visitados = new int[numVertices()];
+		ordenVisita = 0;
+		recorridoDFS(0);
+		return ordenVisita == numVertices();
+	}
+	public void recorridoDFS(int v) {
+		visitados[v] = 1;
+		ordenVisita++;
+		ListaConPI<Adyacente> l = adyacentesDe(v);
+		for(l.inicio();!l.esFin(); l.siguiente()) {
+			int w = l.recuperar().getDestino();
+			if(visitados[w] == 0) {recorridoDFS(w);}
+		}
+	}
 
 	public static void main(String[] args) {
-		GrafoDirigido g = new GrafoDirigido(4);
-
+//		GrafoDirigido g = new GrafoDirigido(4);
+		GrafoNoDirigido g = new GrafoNoDirigido(4);
 		g.insertarArista(0, 1);
 		g.insertarArista(2, 0);
 		g.insertarArista(2, 3);
 		g.insertarArista(2, 1);
 
-		System.out.println(g.gradoAlt());
-		System.out.println(g.getFuenteU());
+		int[] a = g.finDelDFS();
+		
+		//System.out.println(g.gradoAlt());
+		
+		for(int i= 0; i< a.length; i++)
+			System.out.println(a[i]);
 	}
 }
