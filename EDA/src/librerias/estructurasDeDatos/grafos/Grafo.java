@@ -170,12 +170,21 @@ public abstract class Grafo {
 		g.insertarArista(2, 0);
 		g.insertarArista(2, 3);
 		g.insertarArista(2, 1);
+		
 
-		int[] a = g.finDelDFS();
+//		int[] a = g.finDelDFS();
 		
 		//System.out.println(g.gradoAlt());
 		
-		for(int i= 0; i< a.length; i++)
-			System.out.println(a[i]);
-	}
+//		for(int i= 0; i< a.length; i++)
+//			System.out.println(a[i]);
+//	}
+		String[] s = g.spanningTree();
+		
+		for(int i=0; i<s.length;i++) {
+			System.out.println(s[i]);
+		}
+		
+		
 }
+	}

@@ -1,5 +1,7 @@
 package librerias.estructurasDeDatos.grafos;
 
+import librerias.estructurasDeDatos.modelos.ListaConPI;
+
 /** Clase GrafoNoDirigido: 
  *  implementacion de un grafo No Dirigido (Ponderado o no) 
  *  mediante Listas de Adyacencia:
@@ -29,7 +31,52 @@ public class GrafoNoDirigido extends GrafoDirigido {
             numA++; 
         }*/
     }
+
+    public String toStringCC() {
+    	String res = ""; visitados = new int[numVertices()];
+    	int nCC = 0;
+    	for(int v = 0; v<numVertices(); v++) {
+    		if(visitados[v] == 0) {nCC++; res += " [" + toStringCC(v) + "] ";}
+    	}
+    	return "Hay " + nCC + " componentes conexas y son: " + res;
+    }
+    protected String toStringCC(int v) {
+    	String res = "" +v; visitados[v] = 1;
+    	ListaConPI<Adyacente> l = adyacentesDe(v);
+    	for(l.inicio(); !l.esFin(); l.siguiente()) {
+    		int w = l.recuperar().getDestino();
+    		if(visitados[w]==0) {
+    			res += toStringCC(w);
+    		}
+    		
+    	}
+    	return res;
+    }
     
+    protected String[] spanningTree(int v, String[] res) {
+    	visitados[v] = 1;
+    	ListaConPI<Adyacente> l = adyacentesDe(v);
+    	for(l.inicio(); !l.esFin(); l.siguiente()) {
+    		int w = l.recuperar().getDestino();
+    		if(visitados[w] == 0) {
+    			res[aristasTree++] = "[" + v + ", " + w + "]";
+    			spanningTree(w, res);
+    		}
+    	}
+    	return res;
+    }
+    
+    protected int aristasTree;
+    
+    public String[] spanningTree(){
+    	visitados = new int[numVertices()];
+    	String[] res = new String[numVertices() - 1];
+    	aristasTree=0;
+    	spanningTree(0, res);
+    	if(aristasTree != numVertices() - 1) {return null;}
+    	else return res;
+    }
+     
     /** Si no esta, inserta la arista (i, j) de peso p 
      *  en un grafo No Dirigido y Ponderado; 
      *  por tanto, tambien inserta la arista (j, i) de peso p.
