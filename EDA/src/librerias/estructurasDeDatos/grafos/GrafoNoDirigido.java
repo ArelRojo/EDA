@@ -54,7 +54,7 @@ public class GrafoNoDirigido extends GrafoDirigido {
     }
     
     protected String[] spanningTree(int v, String[] res) {
-    	visitados[v] = 1;
+    	visitados[v] = 1;	
     	ListaConPI<Adyacente> l = adyacentesDe(v);
     	for(l.inicio(); !l.esFin(); l.siguiente()) {
     		int w = l.recuperar().getDestino();

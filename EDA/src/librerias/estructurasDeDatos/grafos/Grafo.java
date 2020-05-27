@@ -163,14 +163,35 @@ public abstract class Grafo {
 		}
 	}
 
+	protected void numeroCC(int v) {
+		visitados[v] = 1;
+		ListaConPI<Adyacente> l = adyacentesDe(v);
+		for(l.inicio(); !l.esFin(); l.siguiente()) {
+			int w = l.recuperar().getDestino();
+			if(visitados[w] == 0) {numeroCC(w);}
+		}
+	}
+	
+	public int numeroCC() {
+		int nCC = 0;
+		visitados = new int[numVertices()];
+		for(int v = 0; v<numVertices(); v++) {
+			if(visitados[v] == 0) {
+				nCC++; numeroCC(v);
+			}
+			
+		}
+		return nCC;
+	}
+
 	public static void main(String[] args) {
 //		GrafoDirigido g = new GrafoDirigido(4);
-		GrafoNoDirigido g = new GrafoNoDirigido(4);
+		GrafoNoDirigido g = new GrafoNoDirigido(6);
 		g.insertarArista(0, 1);
 		g.insertarArista(2, 0);
 		g.insertarArista(2, 3);
 		g.insertarArista(2, 1);
-		
+		g.insertarArista(4, 5);
 
 //		int[] a = g.finDelDFS();
 		
@@ -179,11 +200,11 @@ public abstract class Grafo {
 //		for(int i= 0; i< a.length; i++)
 //			System.out.println(a[i]);
 //	}
-		String[] s = g.spanningTree();
 		
-		for(int i=0; i<s.length;i++) {
-			System.out.println(s[i]);
-		}
+		
+		
+			System.out.println(g.numeroCC());
+		
 		
 		
 }
