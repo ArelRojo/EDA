@@ -236,4 +236,6 @@ public class GrafoDirigido extends Grafo {
     public boolean esCompleto() {
     	return numA == numV * (numV - 1);
     }
+    
+ 
 }

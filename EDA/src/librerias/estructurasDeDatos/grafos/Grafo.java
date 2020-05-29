@@ -94,16 +94,23 @@ public abstract class Grafo {
 
 	
 	//metodo toArrayDFS del grafo
-	public int[] toArrayDFS() {
-		int[]res =new int[numVertices()];
-		ordenVisita=0;
-		visitados =new int[numVertices()];
-		for(int v = 0; v<numVertices(); v++) {
-			if(visitados[v] == 0) {toArrayDFS(v, res);}
-			
-		}
-		return res;
-	}
+	   public int[] toArrayDFS() {
+	        int[] res = new int[numVertices()]; ordenVisita = 0;
+	        visitados = new int[numVertices()];        
+	        for (int v = 0; v < numVertices(); v++) {
+	            if (visitados[v] == 0) { toArrayDFS(v, res); }
+	        }
+	        return res;
+	    }
+	    protected void toArrayDFS(int v, int[] res) {
+	        res[ordenVisita] = v; ordenVisita++;
+	        visitados[v] = 1;
+	        ListaConPI<Adyacente> l = adyacentesDe(v);
+	        for (l.inicio(); !l.esFin(); l.siguiente()) {
+	            int w = l.recuperar().getDestino();
+	            if (visitados[w] == 0) { toArrayDFS(w, res); }
+	        }
+	    }
 	
 	public int[] finDelDFS() {
 		int[] res = new int[numVertices()]; ordenVisita = 0;
@@ -115,19 +122,7 @@ public abstract class Grafo {
 	}
 	
 	// metodo toArrayDFS de un vertice
-		protected void toArrayDFS(int v, int[] res) {
-			res[ordenVisita] = v;
-			ordenVisita++;
-			visitados[v] = 1;
-			ListaConPI<Adyacente> l = adyacentesDe(v);
-			for (l.inicio(); !l.esFin(); l.siguiente()) {
-				int w = l.recuperar().getDestino();
-				if (visitados[w] == 0) {
-					toArrayDFS(w, res);
-				}
 
-			}
-		}
 		
 	/** metodo finDelDFS 
 	 */
@@ -183,16 +178,45 @@ public abstract class Grafo {
 		}
 		return nCC;
 	}
+	
+	public boolean ColorDFS() {
+		visitados = new int[numVertices()];
+		boolean[] colorado = new boolean[numVertices()];
+		visitados[0] = 1;
+		colorado[0] = true;
+		return colorDFS(0, colorado);
+	}
+	
+	protected boolean colorDFS(int v, boolean[] c) {
+		ListaConPI<Adyacente> l = adyacentesDe(v);
+		for(l.inicio(); !l.esFin(); l.siguiente()) {
+			int w = l.recuperar().getDestino();
+			if(visitados[w] == 0) {
+				visitados[w] = 1;
+				c[w] = !c[v];
+				if(!colorDFS(w, c)) return false;
+			}
+			else if(c[w] == c[v]) return false;
+		}
+		return true;
+	}
 
 	public static void main(String[] args) {
 //		GrafoDirigido g = new GrafoDirigido(4);
-		GrafoNoDirigido g = new GrafoNoDirigido(6);
+		GrafoDirigido g = new GrafoDirigido(9);
 		g.insertarArista(0, 1);
-		g.insertarArista(2, 0);
-		g.insertarArista(2, 3);
+		g.insertarArista(0, 2);
+		g.insertarArista(0, 3);
+		g.insertarArista(0, 4);
 		g.insertarArista(2, 1);
-		g.insertarArista(4, 5);
-
+		g.insertarArista(2, 5);
+		g.insertarArista(3, 2);
+		g.insertarArista(3, 7);
+		g.insertarArista(5, 6);
+		g.insertarArista(6, 1);
+		g.insertarArista(7, 5);
+		g.insertarArista(8, 4);
+		g.insertarArista(8, 7);
 //		int[] a = g.finDelDFS();
 		
 		//System.out.println(g.gradoAlt());
@@ -200,10 +224,13 @@ public abstract class Grafo {
 //		for(int i= 0; i< a.length; i++)
 //			System.out.println(a[i]);
 //	}
+		int[] b = g.toArrayDFS();
+		for(int i = 0; i<b.length; i++) {
+			System.out.println(b[i]);
+		}
 		
 		
-		
-			System.out.println(g.numeroCC());
+			//System.out.println(g.numeroCC());
 		
 		
 		

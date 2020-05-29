@@ -1,4 +1,4 @@
-package librerias.estructurasDeDatos.jerarquicos;
+	package librerias.estructurasDeDatos.jerarquicos;
 
 import librerias.estructurasDeDatos.modelos.*;
 
@@ -54,6 +54,21 @@ public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<
 			posIns = posIns / 2;
 		}
 		return posIns;
+	}
+	
+	public E eliminarMax() {
+		int posMax = talla/2 + 1;
+		for(int i = posMax + 1; i <= talla; i++) {
+			if(elArray[posMax].compareTo(elArray[i]) < 0) {
+				posMax = i;
+			}
+		}
+		E max = elArray[posMax];
+		elArray[posMax] = elArray[talla--];
+		
+		
+		reflotar(max, posMax);
+		return max;
 	}
 
 	@SuppressWarnings("unchecked")
