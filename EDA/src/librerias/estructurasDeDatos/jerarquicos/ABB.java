@@ -137,7 +137,7 @@ public class ABB<E extends Comparable<E>> {
 					return actual.izq;
 				} else {
 					res.dato = recuperarMin(actual.der).dato;
-					res.der = eliminarMin(actual.der);
+					res.der = eliminarMin(actual.der );
 				}
 			}
 			res.talla = 1 + talla(res.izq) + talla(res.der);
@@ -180,7 +180,7 @@ public class ABB<E extends Comparable<E>> {
 	protected NodoABB<E> eliminarMin(NodoABB<E> actual) {
 //		NodoABB<E> aux = actual, padreAux = null;
 //		while (aux.izq != null) {
-//			aux.talla--;
+////			aux.talla--;
 //			padreAux = aux;
 //			aux = aux.izq;
 //
@@ -346,5 +346,18 @@ public class ABB<E extends Comparable<E>> {
     
     public String datosEnNivel(int k) {
     	return "[" + datosEnNivel(k, this.raiz) + "]";
+    }
+    
+    public static void main(String[] args) {
+    	ABB<Integer> a = new ABB<>();
+    	a.insertar(5);
+    	
+    	a.insertar(7);
+    	
+    	a.insertar(6);
+    	a.insertar(9);
+    	
+    	System.out.println(a.eliminarMin());
+    	System.out.println(a.toStringInOrden());
     }
 }

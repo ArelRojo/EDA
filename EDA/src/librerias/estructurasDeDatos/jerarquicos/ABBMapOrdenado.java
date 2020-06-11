@@ -45,11 +45,7 @@ public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C
 		EntradaMap<C, V> e = new EntradaMap<C, V>(c, null);
 		EntradaMap<C, V> eR = abb.recuperar(e);
 		abb.eliminar(new EntradaMap<C, V>(c, null));
-		if (e != null) {
-			return e.getValor();
-		} else {
-			return null;
-		}
+		return e.getValor();
 	}
 
 	/**
