@@ -57,4 +57,10 @@ public class MergeSort {
     public static <T extends Comparable<T>> void mergeSort(T[] v) {
         mergeSort(v, 0, v.length - 1);
     }
+    
+    public static void main(String[] args) {
+    	Integer[] v = {10,3,50,11,3,1,3,4,5,1};
+    	
+    	mergeSort(v);
+    }
 }
