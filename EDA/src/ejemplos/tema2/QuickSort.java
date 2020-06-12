@@ -23,6 +23,29 @@ public class QuickSort {
         }
     }
     
+    public static <T extends Comparable<T>> void q3(T[] v) {
+        q3(v, 0, v.length - 1);
+    }
+    private static <T extends Comparable<T>> void q3(T[] v, int i, int d) {
+    	if(i<d) {
+    		//DIVIDIR: ordenar el pivote, o particion de v[i...d]
+    		T pivote = medianaDeTres(v,i,d);
+    		intercambiar(v, (i+d)/2, d-1);
+    		int indP = i, j = d-1;
+    		for(;indP > j;) {
+    			while(v[++indP].compareTo(pivote) < 0) {;}
+    			while(v[--j].compareTo(pivote) > 0) {;}
+    			intercambiar(v, indP, j);
+    		}
+    		intercambiar(v, indP, j); //por si acaso deshacer el ultimo cambio
+    		intercambiar(v,indP,d-1);
+    		
+    		//VENCER
+    		q3(v,i,indP-1);
+    		q3(v,indP+1,d);
+    	}
+    }
+    
     private static <T extends Comparable <T>> int particion(
         T[] v, int i, int d) 
     {
@@ -81,5 +104,11 @@ public class QuickSort {
             else if (k - 1 > indP) seleccionRapida(v, k, indP + 1, d); 
             //else, si indP == k – 1 … ¡Hemos encontrado el k-ésimo menor!
         }
+    }
+    
+    public static void main(String[] args) {
+    	Integer[] v = {86,66,24,78,100,106,46,53,89,69,5};
+    	
+    	q3(v);
     }
 }
