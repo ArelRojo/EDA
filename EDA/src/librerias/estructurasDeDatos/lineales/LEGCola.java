@@ -6,8 +6,9 @@ import librerias.excepciones.ElementoNoEncontrado;
 
 public class LEGCola<E> implements Cola<E> {
 	
-	private NodoLEG<E> first, last;
-	private int size;
+	protected NodoLEG<E> first;
+	protected NodoLEG<E> last;
+	protected int size;
 	
 	/**Constructor Cola vacia*/
 	public LEGCola() {

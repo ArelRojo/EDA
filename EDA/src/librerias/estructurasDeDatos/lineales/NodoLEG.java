@@ -25,4 +25,6 @@ class NodoLEG<E> {
      *  @param e Elemento que contiene un Nodo
      */
     NodoLEG(E dato) { this(dato, null); } 
+    
+
 }
